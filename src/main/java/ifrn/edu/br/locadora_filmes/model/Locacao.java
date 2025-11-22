@@ -12,19 +12,19 @@ public class Locacao {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @NotNull
+    @NotNull(message = "Cliente é obrigatório")
     @ManyToOne
     private Cliente cliente;
 
-    @NotNull
+    @NotNull(message = "Data de locação é obrigatória")
     private LocalDate data_locacao;
 
-    @NotNull
+    @NotNull(message = "Data de devolução prevista é obrigatória")
     private LocalDate data_devolucao_prevista;
-    private LocalDate data_devolucao_real; // pode ser null pq nao sei quando vai ser devolvido
-    // tambem pode ser usado para saber se esta atrasada comparando a data_devolucao_prevista e real
+    
+    private LocalDate data_devolucao_real;
 
-    @NotNull
+    @NotNull(message = "Status é obrigatório")
     @Enumerated(EnumType.STRING)
     private StatusLocacao status;
 
