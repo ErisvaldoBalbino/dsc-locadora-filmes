@@ -7,10 +7,12 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+import lombok.Data;
 
 import java.util.List;
 
 @Entity
+@Data
 public class Genero {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
