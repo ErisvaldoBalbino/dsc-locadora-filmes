@@ -54,3 +54,6 @@ API REST desenvolvida em Spring Boot para gerenciar o catálogo de filmes de uma
 - `GET /api/locacoes/atrasadas` - Listar locações atrasadas
 - `POST /api/locacoes` - Criar nova locação
 - `PATCH /api/locacoes/{id}/devolver` - Registrar devolução de uma locação
+
+## 📊 Diagrama ER
+<img width="1016" height="584" alt="image" src="https://github.com/user-attachments/assets/a96ac246-9886-4dfc-b7c3-712b0afe6bcb" />
