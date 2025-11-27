@@ -8,6 +8,7 @@ import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.util.List;
 
@@ -16,6 +17,7 @@ import java.util.List;
 public class Genero {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonIgnore
     private long id;
 
     @NotBlank(message = "Nome do gênero é obrigatório")
@@ -23,5 +25,6 @@ public class Genero {
     private String nome;
 
     @OneToMany(mappedBy = "genero")
+    @JsonIgnore
     private List<Filme> filmes;
 }
