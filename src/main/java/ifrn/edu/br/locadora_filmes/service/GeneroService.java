@@ -1,6 +1,9 @@
 package ifrn.edu.br.locadora_filmes.service;
 
 import ifrn.edu.br.locadora_filmes.repository.GeneroRepository;
+import ifrn.edu.br.locadora_filmes.dto.requests.GeneroCreateDTO;
+import ifrn.edu.br.locadora_filmes.dto.requests.GeneroUpdateDTO;
+import ifrn.edu.br.locadora_filmes.dto.responses.GeneroResponseDTO;
 import ifrn.edu.br.locadora_filmes.model.Genero;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,30 +27,48 @@ public class GeneroService {
     }
 
     @Transactional
-    public Genero salvar(Genero genero) {
-        if (generoRepository.existsByNome(genero.getNome())) {
+    public GeneroResponseDTO salvar(GeneroCreateDTO generoDTO) {
+        if (generoRepository.existsByNome(generoDTO.getNome())) {
             throw new RuntimeException("Já existe um gênero com esse nome.");
         }
-        return generoRepository.save(genero);
+
+        Genero genero = new Genero();
+
+        genero.setNome(generoDTO.getNome());
+
+        Genero generoSalvo = generoRepository.save(genero);
+
+        return converterParaDTO(generoSalvo);
     }
 
     @Transactional
-    public Genero atualizar(Long id, Genero generoAtualizado) {
+    public GeneroResponseDTO atualizar(Long id, GeneroUpdateDTO generoDTO) {
         Genero generoExistente = buscarPorId(id);
 
-        if (!generoExistente.getNome().equals(generoAtualizado.getNome()) && 
-             generoRepository.existsByNome(generoAtualizado.getNome())) {
+        if (!generoExistente.getNome().equals(generoDTO.getNome()) && 
+             generoRepository.existsByNome(generoDTO.getNome())) {
             throw new RuntimeException("Já existe um gênero com esse nome.");
         }
 
-        generoExistente.setNome(generoAtualizado.getNome());
+        generoExistente.setNome(generoDTO.getNome());
+
+        Genero generoAtualizado = generoRepository.save(generoExistente);
         
-        return generoRepository.save(generoExistente);
+        return converterParaDTO(generoAtualizado);
     }
 
     @Transactional
     public void deletar(Long id) {
         Genero genero = buscarPorId(id);
         generoRepository.delete(genero);
+    }
+
+    private GeneroResponseDTO converterParaDTO(Genero genero) {
+        GeneroResponseDTO generoDTO = new GeneroResponseDTO();
+
+        generoDTO.setId(genero.getId());
+        generoDTO.setNome(genero.getNome());
+
+        return generoDTO;
     }
 }
