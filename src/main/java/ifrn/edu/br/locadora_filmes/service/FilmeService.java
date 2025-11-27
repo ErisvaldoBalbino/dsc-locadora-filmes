@@ -29,9 +29,7 @@ public class FilmeService {
         if (filmeRepository.existsByTitulo(filme.getTitulo())) {
             throw new RuntimeException("Já existe um filme com esse título.");
         }
-        if (filmeRepository.existsByAno(filme.getAno())) {
-            throw new RuntimeException("Já existe um filme com esse ano.");
-        }
+
         return filmeRepository.save(filme);
     }
 
