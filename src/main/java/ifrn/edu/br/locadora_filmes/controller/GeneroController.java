@@ -11,38 +11,62 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.RestController;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 
 import ifrn.edu.br.locadora_filmes.service.GeneroService;
 import ifrn.edu.br.locadora_filmes.model.Genero;
 
 @RestController
 @RequestMapping("/api/generos")
+@Tag(name = "Gêneros", description = "API para gerenciamento de gêneros de filmes")
 public class GeneroController {
 
     @Autowired
     private GeneroService generoService;
 
     @GetMapping
+    @Operation(
+        summary = "Listar todos os gêneros",
+        description = "Retorna uma lista com todos os gêneros"
+    )
     public List<Genero> buscarTodos() {
         return generoService.buscarTodos();
     }
 
     @GetMapping("/{id}")
+    @Operation(
+        summary = "Buscar gênero por ID",
+        description = "Retorna os detalhes de um gênero"
+    )
     public Genero buscarPorId(@PathVariable Long id) {
         return generoService.buscarPorId(id);
     }
 
     @PostMapping
+    @Operation(
+        summary = "Criar um novo gênero",
+        description = "Cria um novo gênero no sistema"
+    )
     public Genero salvar(@RequestBody Genero genero) {
         return generoService.salvar(genero);
     }
 
     @PutMapping("/{id}")
+    @Operation(
+        summary = "Atualizar um gênero",
+        description = "Atualiza um gênero existente"
+    )
     public Genero atualizar(@PathVariable Long id, @RequestBody Genero genero) {
         return generoService.atualizar(id, genero);
     }
 
     @DeleteMapping("/{id}")
+    @Operation(
+        summary = "Deletar um gênero",
+        description = "Deleta um gênero existente, o gênero não poderá ser deletado se possuir filmes associados"
+    )
     public void deletar(@PathVariable Long id) {
         generoService.deletar(id);
     }
