@@ -26,5 +26,9 @@ public interface FilmeRepository extends JpaRepository<Filme, Long> {
     List<Filme> findByGeneroId(@Param("genero") Genero genero);
     
     Optional<Filme> findByTituloAndAno(String titulo, int ano);
+
+    boolean existsByTitulo(String titulo);
+
+    boolean existsByAno(int ano);
 }
 
