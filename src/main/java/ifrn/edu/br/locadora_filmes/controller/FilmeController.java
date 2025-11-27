@@ -10,7 +10,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.RestController;
+import jakarta.validation.Valid;
 
+import ifrn.edu.br.locadora_filmes.dto.requests.FilmeCreateDTO;
+import ifrn.edu.br.locadora_filmes.dto.requests.FilmeUpdateDTO;
+import ifrn.edu.br.locadora_filmes.dto.responses.FilmeResponseDTO;
 import ifrn.edu.br.locadora_filmes.model.Filme;
 import ifrn.edu.br.locadora_filmes.service.FilmeService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -47,8 +51,8 @@ public class FilmeController {
         summary = "Criar um novo filme",
         description = "Cria um novo filme no sistema"
     )
-    public Filme salvar(@RequestBody Filme filme) {
-        return filmeService.salvar(filme);
+    public FilmeResponseDTO salvar(@Valid @RequestBody FilmeCreateDTO filmeDTO) {
+        return filmeService.salvar(filmeDTO);
     }
     
     @PutMapping("{id}")
@@ -56,8 +60,8 @@ public class FilmeController {
         summary = "Atualizar um filme",
         description = "Atualiza um filme existente"
     )
-    public Filme atualizar(@PathVariable Long id, @RequestBody Filme filme) {
-        return filmeService.atualizar(id, filme);
+    public FilmeResponseDTO atualizar(@PathVariable Long id, @RequestBody FilmeUpdateDTO filmeDTO) {
+        return filmeService.atualizar(id, filmeDTO);
     }
     
     @DeleteMapping("{id}")

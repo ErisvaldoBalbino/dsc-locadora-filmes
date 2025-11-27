@@ -13,9 +13,12 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.RestController;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-
+import jakarta.validation.Valid;
 
 import ifrn.edu.br.locadora_filmes.service.GeneroService;
+import ifrn.edu.br.locadora_filmes.dto.requests.GeneroCreateDTO;
+import ifrn.edu.br.locadora_filmes.dto.requests.GeneroUpdateDTO;
+import ifrn.edu.br.locadora_filmes.dto.responses.GeneroResponseDTO;
 import ifrn.edu.br.locadora_filmes.model.Genero;
 
 @RestController
@@ -49,8 +52,8 @@ public class GeneroController {
         summary = "Criar um novo gênero",
         description = "Cria um novo gênero no sistema"
     )
-    public Genero salvar(@RequestBody Genero genero) {
-        return generoService.salvar(genero);
+    public GeneroResponseDTO salvar(@Valid @RequestBody GeneroCreateDTO generoDTO) {
+        return generoService.salvar(generoDTO);
     }
 
     @PutMapping("/{id}")
@@ -58,8 +61,8 @@ public class GeneroController {
         summary = "Atualizar um gênero",
         description = "Atualiza um gênero existente"
     )
-    public Genero atualizar(@PathVariable Long id, @RequestBody Genero genero) {
-        return generoService.atualizar(id, genero);
+    public GeneroResponseDTO atualizar(@PathVariable Long id, @RequestBody GeneroUpdateDTO generoDTO) {
+        return generoService.atualizar(id, generoDTO);
     }
 
     @DeleteMapping("/{id}")
