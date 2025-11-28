@@ -8,5 +8,5 @@ public class FilmeResponseDTO {
     private String titulo;
     private int ano;
     private int quantidade_total;
-    private String generoNome;
+    private String genero;
 }

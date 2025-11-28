@@ -94,7 +94,7 @@ public class FilmeService {
         filmeDTO.setTitulo(filme.getTitulo());
         filmeDTO.setAno(filme.getAno());
         filmeDTO.setQuantidade_total(filme.getQuantidade_total());
-        filmeDTO.setGeneroNome(filme.getGenero().getNome());
+        filmeDTO.setGenero(filme.getGenero().getNome());
 
         return filmeDTO;
     }
