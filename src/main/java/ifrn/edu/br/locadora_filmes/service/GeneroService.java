@@ -17,13 +17,22 @@ public class GeneroService {
     @Autowired
     private GeneroRepository generoRepository;
 
-    public List<Genero> buscarTodos() {
-        return generoRepository.findAll();
+    public List<GeneroResponseDTO> buscarTodos() {
+        return generoRepository.findAll().stream()
+            .map(this::converterParaDTO)
+            .toList();
     }
+
 
     public Genero buscarPorId(Long id) {
         return generoRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Gênero não encontrado."));
+    }
+
+    public GeneroResponseDTO buscarPorIdDTO(Long id) {
+        Genero genero = generoRepository.findById(id)
+                            .orElseThrow(() -> new RuntimeException("Gênero não encontrado"));
+        return converterParaDTO(genero);
     }
 
     @Transactional

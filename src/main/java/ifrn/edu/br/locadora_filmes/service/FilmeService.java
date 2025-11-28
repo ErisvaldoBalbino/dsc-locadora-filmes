@@ -23,13 +23,21 @@ public class FilmeService {
     @Autowired
     private GeneroRepository generoRepository;
 
-    public List<Filme> buscarTodos() {
-        return filmeRepository.findAll();
+    public List<FilmeResponseDTO> buscarTodos() {
+        return filmeRepository.findAll().stream()
+            .map(this::converterParaDTO)
+            .toList();
     }
 
     public Filme buscarPorId(Long id) {
         return filmeRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Filme não encontrado."));
+    }
+
+    public FilmeResponseDTO buscarPorIdDTO(Long id) {
+        Filme filme = filmeRepository.findById(id)
+                        .orElseThrow(() -> new RuntimeException("Filme não encontrado."));
+        return converterParaDTO(filme);
     }
 
     @Transactional
