@@ -1,0 +1,15 @@
+services:
+  database:
+    image: 'postgres:16'
+    container_name: locadora-filmes-db
+    ports:
+    - '15432:5432'
+    environment:
+    - 'POSTGRES_USER=myuser'
+    - 'POSTGRES_DB=mydatabase'
+    - 'POSTGRES_PASSWORD=secret'
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
