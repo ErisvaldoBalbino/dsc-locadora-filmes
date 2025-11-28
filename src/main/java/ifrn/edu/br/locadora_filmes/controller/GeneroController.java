@@ -34,7 +34,7 @@ public class GeneroController {
         summary = "Listar todos os gêneros",
         description = "Retorna uma lista com todos os gêneros"
     )
-    public List<Genero> buscarTodos() {
+    public List<GeneroResponseDTO> buscarTodos() {
         return generoService.buscarTodos();
     }
 
@@ -43,8 +43,8 @@ public class GeneroController {
         summary = "Buscar gênero por ID",
         description = "Retorna os detalhes de um gênero"
     )
-    public Genero buscarPorId(@PathVariable Long id) {
-        return generoService.buscarPorId(id);
+    public GeneroResponseDTO buscarPorId(@PathVariable Long id) {
+        return generoService.buscarPorIdDTO(id);
     }
 
     @PostMapping

@@ -33,7 +33,7 @@ public class FilmeController {
         summary = "Listar todos os filmes",
         description = "Retorna uma lista com todos os filmes do sistema"
     )
-    public List<Filme> buscarTodos() {
+    public List<FilmeResponseDTO> buscarTodos() {
         return filmeService.buscarTodos();
     }
     
@@ -42,8 +42,8 @@ public class FilmeController {
         summary = "Buscar filme por ID",
         description = "Retorna os detalhes de um filme"
     )
-    public Filme buscarPorId(@PathVariable Long id) {
-        return filmeService.buscarPorId(id);
+    public FilmeResponseDTO buscarPorId(@PathVariable Long id) {
+        return filmeService.buscarPorIdDTO(id);
     }
 
     @PostMapping()
