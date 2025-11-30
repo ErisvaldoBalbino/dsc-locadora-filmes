@@ -40,6 +40,12 @@ public class FilmeService {
         return converterParaDTO(filme);
     }
 
+    public List<FilmeResponseDTO> buscarDisponiveis() {
+        return filmeRepository.findFilmesDisponiveis().stream()
+                .map(this::converterParaDTO)
+                .toList();
+    }
+
     @Transactional
     public FilmeResponseDTO salvar(FilmeCreateDTO filmeDTO) {
         if (filmeRepository.existsByTitulo(filmeDTO.getTitulo())) {
