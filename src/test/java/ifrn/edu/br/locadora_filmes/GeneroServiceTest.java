@@ -8,6 +8,8 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import ifrn.edu.br.locadora_filmes.service.GeneroService;
 import ifrn.edu.br.locadora_filmes.repository.GeneroRepository;
+import ifrn.edu.br.locadora_filmes.dto.requests.GeneroCreateDTO;
+import ifrn.edu.br.locadora_filmes.dto.responses.GeneroResponseDTO;
 import ifrn.edu.br.locadora_filmes.model.Genero;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -23,6 +25,24 @@ class GeneroServiceTests {
 
 	@Mock
 	private GeneroRepository generoRepository;
+
+	@Test
+	void testCreateGenero() {
+		GeneroCreateDTO generoDTO = new GeneroCreateDTO();
+		generoDTO.setNome("Ação");
+
+		Genero generoSalvo = new Genero();
+		generoSalvo.setId(1L);
+		generoSalvo.setNome("Ação");
+
+		Mockito.when(generoRepository.existsByNome("Ação")).thenReturn(false);
+		Mockito.when(generoRepository.save(Mockito.any(Genero.class))).thenReturn(generoSalvo);
+
+		GeneroResponseDTO resultado = generoService.salvar(generoDTO);
+
+		assertNotNull(resultado);
+		assertEquals("Ação", resultado.getNome());
+	}
 
 	@Test
 	void testGetGeneroById() {
