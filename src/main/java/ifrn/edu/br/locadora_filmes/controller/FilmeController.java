@@ -46,6 +46,15 @@ public class FilmeController {
         return filmeService.buscarPorIdDTO(id);
     }
 
+    @GetMapping
+    @Operation(
+        summary = "Buscar filmes com cópias em estoque",
+        description = "Retorna filmes que possuem quantidade_total >= 1"
+    )
+    public List<FilmeResponseDTO> buscarDisponiveis() {
+        return filmeService.buscarDisponiveis();
+    }
+
     @PostMapping()
     @Operation(
         summary = "Criar um novo filme",
