@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.RestController;
 import jakarta.validation.Valid;
+import org.springframework.http.ResponseEntity;
 
 import ifrn.edu.br.locadora_filmes.dto.requests.FilmeCreateDTO;
 import ifrn.edu.br.locadora_filmes.dto.requests.FilmeUpdateDTO;
@@ -33,8 +34,9 @@ public class FilmeController {
         summary = "Listar todos os filmes",
         description = "Retorna uma lista com todos os filmes do sistema"
     )
-    public List<FilmeResponseDTO> buscarTodos() {
-        return filmeService.buscarTodos();
+    public ResponseEntity<List<FilmeResponseDTO>> buscarTodos() {
+        List<FilmeResponseDTO> filmes = filmeService.buscarTodos();
+        return ResponseEntity.ok(filmes);
     }
     
     @GetMapping("{id}")
@@ -42,17 +44,19 @@ public class FilmeController {
         summary = "Buscar filme por ID",
         description = "Retorna os detalhes de um filme"
     )
-    public FilmeResponseDTO buscarPorId(@PathVariable Long id) {
-        return filmeService.buscarPorIdDTO(id);
+    public ResponseEntity<FilmeResponseDTO> buscarPorId(@PathVariable Long id) {
+        FilmeResponseDTO filme = filmeService.buscarPorIdDTO(id);
+        return ResponseEntity.ok(filme);
     }
 
-    @GetMapping
+    @GetMapping("/disponiveis")
     @Operation(
         summary = "Buscar filmes com cópias em estoque",
-        description = "Retorna filmes que possuem quantidade_total >= 1"
+        description = "Retorna filmes que possuem quantidade_total > 0"
     )
-    public List<FilmeResponseDTO> buscarDisponiveis() {
-        return filmeService.buscarDisponiveis();
+    public ResponseEntity<List<FilmeResponseDTO>> buscarDisponiveis() {
+        List<FilmeResponseDTO> filmes = filmeService.buscarDisponiveis();
+        return ResponseEntity.ok(filmes);
     }
 
     @PostMapping()
@@ -60,8 +64,9 @@ public class FilmeController {
         summary = "Criar um novo filme",
         description = "Cria um novo filme no sistema"
     )
-    public FilmeResponseDTO salvar(@Valid @RequestBody FilmeCreateDTO filmeDTO) {
-        return filmeService.salvar(filmeDTO);
+    public ResponseEntity<FilmeResponseDTO> salvar(@Valid @RequestBody FilmeCreateDTO filmeDTO) {
+        FilmeResponseDTO filme = filmeService.salvar(filmeDTO);
+        return ResponseEntity.ok(filme);
     }
     
     @PutMapping("{id}")
@@ -69,8 +74,9 @@ public class FilmeController {
         summary = "Atualizar um filme",
         description = "Atualiza um filme existente"
     )
-    public FilmeResponseDTO atualizar(@PathVariable Long id, @RequestBody FilmeUpdateDTO filmeDTO) {
-        return filmeService.atualizar(id, filmeDTO);
+    public ResponseEntity<FilmeResponseDTO> atualizar(@PathVariable Long id, @RequestBody FilmeUpdateDTO filmeDTO) {
+        FilmeResponseDTO filme = filmeService.atualizar(id, filmeDTO);
+        return ResponseEntity.ok(filme);
     }
     
     @DeleteMapping("{id}")
@@ -78,7 +84,8 @@ public class FilmeController {
         summary = "Deletar um filme",
         description = "Deleta um filme, caso possua locações associadas o filme não pode ser deletado"
     )
-    public void deletar(@PathVariable Long id) {
+    public ResponseEntity<Void> deletar(@PathVariable Long id) {
         filmeService.deletar(id);
+        return ResponseEntity.noContent().build();
     }
 }

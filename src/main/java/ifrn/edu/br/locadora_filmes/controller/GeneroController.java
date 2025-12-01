@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import org.springframework.http.ResponseEntity;
 
 import ifrn.edu.br.locadora_filmes.service.GeneroService;
 import ifrn.edu.br.locadora_filmes.dto.requests.GeneroCreateDTO;
@@ -34,8 +35,9 @@ public class GeneroController {
         summary = "Listar todos os gêneros",
         description = "Retorna uma lista com todos os gêneros"
     )
-    public List<GeneroResponseDTO> buscarTodos() {
-        return generoService.buscarTodos();
+    public ResponseEntity<List<GeneroResponseDTO>> buscarTodos() {
+        List<GeneroResponseDTO> generos = generoService.buscarTodos();
+        return ResponseEntity.ok(generos);
     }
 
     @GetMapping("/{id}")
@@ -43,8 +45,9 @@ public class GeneroController {
         summary = "Buscar gênero por ID",
         description = "Retorna os detalhes de um gênero"
     )
-    public GeneroResponseDTO buscarPorId(@PathVariable Long id) {
-        return generoService.buscarPorIdDTO(id);
+    public ResponseEntity<GeneroResponseDTO> buscarPorId(@PathVariable Long id) {
+        GeneroResponseDTO genero = generoService.buscarPorIdDTO(id);
+        return ResponseEntity.ok(genero);
     }
 
     @PostMapping
@@ -52,8 +55,9 @@ public class GeneroController {
         summary = "Criar um novo gênero",
         description = "Cria um novo gênero no sistema"
     )
-    public GeneroResponseDTO salvar(@Valid @RequestBody GeneroCreateDTO generoDTO) {
-        return generoService.salvar(generoDTO);
+    public ResponseEntity<GeneroResponseDTO> salvar(@Valid @RequestBody GeneroCreateDTO generoDTO) {
+        GeneroResponseDTO genero = generoService.salvar(generoDTO);
+        return ResponseEntity.ok(genero);
     }
 
     @PutMapping("/{id}")
@@ -61,8 +65,9 @@ public class GeneroController {
         summary = "Atualizar um gênero",
         description = "Atualiza um gênero existente"
     )
-    public GeneroResponseDTO atualizar(@PathVariable Long id, @RequestBody GeneroUpdateDTO generoDTO) {
-        return generoService.atualizar(id, generoDTO);
+    public ResponseEntity<GeneroResponseDTO> atualizar(@PathVariable Long id, @RequestBody GeneroUpdateDTO generoDTO) {
+        GeneroResponseDTO genero = generoService.atualizar(id, generoDTO);
+        return ResponseEntity.ok(genero);
     }
 
     @DeleteMapping("/{id}")
@@ -70,8 +75,9 @@ public class GeneroController {
         summary = "Deletar um gênero",
         description = "Deleta um gênero existente, o gênero não poderá ser deletado se possuir filmes associados"
     )
-    public void deletar(@PathVariable Long id) {
+    public ResponseEntity<Void> deletar(@PathVariable Long id) {
         generoService.deletar(id);
+        return ResponseEntity.noContent().build();
     }
 }
 
