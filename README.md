@@ -6,7 +6,17 @@ API REST desenvolvida em Spring Boot para gerenciar o catálogo de filmes de uma
 
 - **Java**
 - **Spring Boot**
-
+- **Spring Data JPA**
+- **Spring Security**
+- **Spring Doc**
+- **Spring Boot DevTools**
+- **Spring Boot Docker Compose**
+- **Spring Boot Test**
+- **Spring Boot Validation**
+- **Spring Boot Lombok**
+- **Spring Boot DevTools**
+- **PostgreSQL**
+- **Docker**
 
 ## 📋 Funcionalidades
 
@@ -55,5 +65,35 @@ API REST desenvolvida em Spring Boot para gerenciar o catálogo de filmes de uma
 - `POST /api/locacoes` - Criar nova locação
 - `PATCH /api/locacoes/{id}/devolver` - Registrar devolução de uma locação
 
-## 📊 Diagrama ER
-<img width="1016" height="584" alt="image" src="https://github.com/user-attachments/assets/a96ac246-9886-4dfc-b7c3-712b0afe6bcb" />
+## ⚙️ Executando a aplicação
+
+Para rodar a aplicação localmente, execute o comando:
+```bash
+mvn spring-boot:run
+```
+A aplicação estará disponível na porta 8080.
+
+## 📦 Executando a aplicação com Docker
+Para rodar a aplicação com Docker, execute o comando:
+```bash
+docker-compose -f docker-compose-local.yml up --build -d
+```
+A aplicação estará disponível na porta 8080.
+
+Para parar a aplicação com Docker, execute o comando:
+```bash
+docker-compose -f docker-compose-prod.yml down
+```
+
+## 🧪 Testes
+
+Para executar os testes, utilize o comando:
+```bash
+mvn test
+```
+
+Para obter o relatório de cobertura de testes, execute o comando:
+```bash
+mvn jacoco:report
+```
+O relatório de cobertura será gerado no diretório `target/site/jacoco/index.html`.
