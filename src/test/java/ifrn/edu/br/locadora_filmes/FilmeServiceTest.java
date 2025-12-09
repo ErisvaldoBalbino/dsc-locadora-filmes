@@ -8,7 +8,6 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import ifrn.edu.br.locadora_filmes.service.FilmeService;
-import ifrn.edu.br.locadora_filmes.service.GeneroService;
 import ifrn.edu.br.locadora_filmes.repository.FilmeRepository;
 import ifrn.edu.br.locadora_filmes.repository.GeneroRepository;
 import ifrn.edu.br.locadora_filmes.dto.requests.FilmeCreateDTO;

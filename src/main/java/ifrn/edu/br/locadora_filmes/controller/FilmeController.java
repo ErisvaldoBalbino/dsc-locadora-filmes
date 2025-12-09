@@ -16,7 +16,6 @@ import org.springframework.http.ResponseEntity;
 import ifrn.edu.br.locadora_filmes.dto.requests.FilmeCreateDTO;
 import ifrn.edu.br.locadora_filmes.dto.requests.FilmeUpdateDTO;
 import ifrn.edu.br.locadora_filmes.dto.responses.FilmeResponseDTO;
-import ifrn.edu.br.locadora_filmes.model.Filme;
 import ifrn.edu.br.locadora_filmes.service.FilmeService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;

@@ -20,7 +20,6 @@ import ifrn.edu.br.locadora_filmes.service.GeneroService;
 import ifrn.edu.br.locadora_filmes.dto.requests.GeneroCreateDTO;
 import ifrn.edu.br.locadora_filmes.dto.requests.GeneroUpdateDTO;
 import ifrn.edu.br.locadora_filmes.dto.responses.GeneroResponseDTO;
-import ifrn.edu.br.locadora_filmes.model.Genero;
 
 @RestController
 @RequestMapping("/api/generos")
