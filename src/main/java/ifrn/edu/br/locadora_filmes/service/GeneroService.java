@@ -4,6 +4,8 @@ import ifrn.edu.br.locadora_filmes.repository.GeneroRepository;
 import ifrn.edu.br.locadora_filmes.dto.requests.GeneroCreateDTO;
 import ifrn.edu.br.locadora_filmes.dto.requests.GeneroUpdateDTO;
 import ifrn.edu.br.locadora_filmes.dto.responses.GeneroResponseDTO;
+import ifrn.edu.br.locadora_filmes.exception.ResourceNotFoundException;
+import ifrn.edu.br.locadora_filmes.exception.BusinessException;
 import ifrn.edu.br.locadora_filmes.model.Genero;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,19 +28,19 @@ public class GeneroService {
 
     public Genero buscarPorId(Long id) {
         return generoRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Gênero não encontrado."));
+                .orElseThrow(() -> new ResourceNotFoundException("Gênero não encontrado."));
     }
 
     public GeneroResponseDTO buscarPorIdDTO(Long id) {
         Genero genero = generoRepository.findById(id)
-                            .orElseThrow(() -> new RuntimeException("Gênero não encontrado"));
+                            .orElseThrow(() -> new ResourceNotFoundException("Gênero não encontrado"));
         return converterParaDTO(genero);
     }
 
     @Transactional
     public GeneroResponseDTO salvar(GeneroCreateDTO generoDTO) {
         if (generoRepository.existsByNome(generoDTO.getNome())) {
-            throw new RuntimeException("Já existe um gênero com esse nome.");
+            throw new BusinessException("Já existe um gênero com esse nome.");
         }
 
         Genero genero = new Genero();
@@ -56,7 +58,7 @@ public class GeneroService {
 
         if (!generoExistente.getNome().equals(generoDTO.getNome()) && 
              generoRepository.existsByNome(generoDTO.getNome())) {
-            throw new RuntimeException("Já existe um gênero com esse nome.");
+            throw new BusinessException("Já existe um gênero com esse nome.");
         }
 
         generoExistente.setNome(generoDTO.getNome());

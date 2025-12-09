@@ -13,6 +13,8 @@ import ifrn.edu.br.locadora_filmes.repository.GeneroRepository;
 import ifrn.edu.br.locadora_filmes.dto.requests.FilmeCreateDTO;
 import ifrn.edu.br.locadora_filmes.dto.requests.FilmeUpdateDTO;
 import ifrn.edu.br.locadora_filmes.dto.responses.FilmeResponseDTO;
+import ifrn.edu.br.locadora_filmes.exception.ResourceNotFoundException;
+import ifrn.edu.br.locadora_filmes.exception.BusinessException;
 import ifrn.edu.br.locadora_filmes.model.Filme;
 import ifrn.edu.br.locadora_filmes.model.Genero;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -77,7 +79,7 @@ public class FilmeServiceTest {
         
         Mockito.when(filmeRepository.existsByTitulo("Filme teste")).thenReturn(true);
 
-        assertThrows(RuntimeException.class, () -> filmeService.salvar(filmeDTO));
+        assertThrows(BusinessException.class, () -> filmeService.salvar(filmeDTO));
     }
 
     @Test
@@ -144,7 +146,7 @@ public class FilmeServiceTest {
         Mockito.when(filmeRepository.findById(filmeId)).thenReturn(Optional.of(filmeExistente));
         Mockito.when(filmeRepository.existsByTitulo("Filme duplicado")).thenReturn(true);
 
-        assertThrows(RuntimeException.class, () -> filmeService.atualizar(filmeId, filmeDTO));
+        assertThrows(BusinessException.class, () -> filmeService.atualizar(filmeId, filmeDTO));
     }
 
     @Test
@@ -170,7 +172,7 @@ public class FilmeServiceTest {
         Mockito.when(filmeRepository.existsByTitulo("Filme atualizado")).thenReturn(false);
         Mockito.when(generoRepository.findById(999L)).thenReturn(Optional.empty());
 
-        assertThrows(RuntimeException.class, () -> filmeService.atualizar(filmeId, filmeDTO));
+        assertThrows(ResourceNotFoundException.class, () -> filmeService.atualizar(filmeId, filmeDTO));
     }
 
     @Test
@@ -185,7 +187,7 @@ public class FilmeServiceTest {
 
         Mockito.when(filmeRepository.findById(filmeId)).thenReturn(Optional.empty());
 
-        assertThrows(RuntimeException.class, () -> filmeService.atualizar(filmeId, filmeDTO));
+        assertThrows(ResourceNotFoundException.class, () -> filmeService.atualizar(filmeId, filmeDTO));
     }
 
     @Test
@@ -198,7 +200,7 @@ public class FilmeServiceTest {
 
         Mockito.when(generoRepository.findById(1L)).thenReturn(Optional.empty());
 
-        assertThrows(RuntimeException.class, () -> filmeService.salvar(filmeDTO));
+        assertThrows(ResourceNotFoundException.class, () -> filmeService.salvar(filmeDTO));
     }
 
     @Test
@@ -233,7 +235,7 @@ public class FilmeServiceTest {
     void testBuscarPorId_ShouldFail_FilmeNaoEncontrado() {
         long filmeId = 1L;
         Mockito.when(filmeRepository.findById(filmeId)).thenReturn(Optional.empty());
-        assertThrows(RuntimeException.class, () -> filmeService.buscarPorId(filmeId));
+        assertThrows(ResourceNotFoundException.class, () -> filmeService.buscarPorId(filmeId));
     }
 
     @Test
@@ -306,6 +308,6 @@ public class FilmeServiceTest {
         long filmeId = 999L;
         Mockito.when(filmeRepository.findById(filmeId)).thenReturn(Optional.empty());
 
-        assertThrows(RuntimeException.class, () -> filmeService.deletar(filmeId));
+        assertThrows(ResourceNotFoundException.class, () -> filmeService.deletar(filmeId));
     }
 }

@@ -9,6 +9,8 @@ import ifrn.edu.br.locadora_filmes.repository.GeneroRepository;
 import ifrn.edu.br.locadora_filmes.dto.requests.FilmeCreateDTO;
 import ifrn.edu.br.locadora_filmes.dto.requests.FilmeUpdateDTO;
 import ifrn.edu.br.locadora_filmes.dto.responses.FilmeResponseDTO;
+import ifrn.edu.br.locadora_filmes.exception.ResourceNotFoundException;
+import ifrn.edu.br.locadora_filmes.exception.BusinessException;
 import ifrn.edu.br.locadora_filmes.model.Filme;
 import ifrn.edu.br.locadora_filmes.model.Genero;
 
@@ -31,12 +33,12 @@ public class FilmeService {
 
     public Filme buscarPorId(Long id) {
         return filmeRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Filme não encontrado."));
+                .orElseThrow(() -> new ResourceNotFoundException("Filme não encontrado."));
     }
 
     public FilmeResponseDTO buscarPorIdDTO(Long id) {
         Filme filme = filmeRepository.findById(id)
-                        .orElseThrow(() -> new RuntimeException("Filme não encontrado."));
+                        .orElseThrow(() -> new ResourceNotFoundException("Filme não encontrado."));
         return converterParaDTO(filme);
     }
 
@@ -49,11 +51,11 @@ public class FilmeService {
     @Transactional
     public FilmeResponseDTO salvar(FilmeCreateDTO filmeDTO) {
         if (filmeRepository.existsByTitulo(filmeDTO.getTitulo())) {
-            throw new RuntimeException("Já existe um filme com esse título.");
+            throw new BusinessException("Já existe um filme com esse título.");
         }
 
         Genero genero = generoRepository.findById(filmeDTO.getGeneroId())
-            .orElseThrow(() -> new RuntimeException("Genêro não encontrado."));
+            .orElseThrow(() -> new ResourceNotFoundException("Genêro não encontrado."));
 
         Filme filme = new Filme();
         filme.setTitulo(filmeDTO.getTitulo());
@@ -71,11 +73,11 @@ public class FilmeService {
         Filme filmeExistente = buscarPorId(id);
         if (!filmeExistente.getTitulo().equals(filmeDTO.getTitulo()) && 
             filmeRepository.existsByTitulo(filmeDTO.getTitulo())) {
-            throw new RuntimeException("Já existe um filme com esse título.");
+            throw new BusinessException("Já existe um filme com esse título.");
         }
 
         Genero genero = generoRepository.findById(filmeDTO.getGeneroId())
-        .orElseThrow(() -> new RuntimeException("Genêro não encontrado."));
+        .orElseThrow(() -> new ResourceNotFoundException("Genêro não encontrado."));
 
         filmeExistente.setTitulo(filmeDTO.getTitulo());
         filmeExistente.setAno(filmeDTO.getAno());

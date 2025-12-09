@@ -11,6 +11,8 @@ import ifrn.edu.br.locadora_filmes.repository.GeneroRepository;
 import ifrn.edu.br.locadora_filmes.dto.requests.GeneroCreateDTO;
 import ifrn.edu.br.locadora_filmes.dto.requests.GeneroUpdateDTO;
 import ifrn.edu.br.locadora_filmes.dto.responses.GeneroResponseDTO;
+import ifrn.edu.br.locadora_filmes.exception.ResourceNotFoundException;
+import ifrn.edu.br.locadora_filmes.exception.BusinessException;
 import ifrn.edu.br.locadora_filmes.model.Genero;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -79,7 +81,7 @@ class GeneroServiceTests {
 		Mockito.when(generoRepository.findById(generoId)).thenReturn(Optional.of(generoSalvo));
 		Mockito.when(generoRepository.existsByNome("Ação")).thenReturn(true);
 
-		assertThrows(RuntimeException.class, () -> generoService.atualizar(generoId, generoDTO));
+		assertThrows(BusinessException.class, () -> generoService.atualizar(generoId, generoDTO));
 	}
 
 	@Test
@@ -89,7 +91,7 @@ class GeneroServiceTests {
 
 		Mockito.when(generoRepository.existsByNome("Ação")).thenReturn(true);
 
-		assertThrows(RuntimeException.class, () -> generoService.salvar(generoDTO));
+		assertThrows(BusinessException.class, () -> generoService.salvar(generoDTO));
 	}
 
 	@Test
@@ -128,7 +130,7 @@ class GeneroServiceTests {
 	void testBuscarPorId_ShouldFail_GeneroNaoEncontrado() {
 		long generoId = 1L;
 		Mockito.when(generoRepository.findById(generoId)).thenReturn(Optional.empty());
-		assertThrows(RuntimeException.class, () -> generoService.buscarPorId(generoId));
+		assertThrows(ResourceNotFoundException.class, () -> generoService.buscarPorId(generoId));
 	}
 
 	@Test
@@ -151,7 +153,7 @@ class GeneroServiceTests {
 		long generoId = 999L;
 		Mockito.when(generoRepository.findById(generoId)).thenReturn(Optional.empty());
 
-		assertThrows(RuntimeException.class, () -> generoService.deletar(generoId));
+		assertThrows(ResourceNotFoundException.class, () -> generoService.deletar(generoId));
 	}
 
 }
