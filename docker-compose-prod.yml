@@ -1,0 +1,33 @@
+name: locadora-filmes
+
+services:
+  database:
+    image: 'postgres:16'
+    container_name: locadora-filmes-db
+    ports:
+    - '15432:5432'
+    environment:
+    - 'POSTGRES_USER=myuser'
+    - 'POSTGRES_DB=mydatabase'
+    - 'POSTGRES_PASSWORD=secret'
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: locadora-filmes-app
+    ports:
+    - '8080:8080'
+    depends_on:
+      database:
+        condition: service_healthy
+    environment:
+    - 'SPRING_DATASOURCE_URL=jdbc:postgresql://database:5432/mydatabase'
+    - 'SPRING_DATASOURCE_USERNAME=myuser'
+    - 'SPRING_DATASOURCE_PASSWORD=secret'
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
