@@ -3,11 +3,13 @@ package ifrn.edu.br.locadora_filmes.model;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Data;
 
 import java.time.LocalDate;
 import java.util.List;
 
 @Entity
+@Data
 public class Locacao {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,13 +25,13 @@ public class Locacao {
 
     @NotNull(message = "Data de devolução prevista é obrigatória")
     private LocalDate data_devolucao_prevista;
-    
+
     private LocalDate data_devolucao_real;
 
     @NotNull(message = "Status é obrigatório")
     @Enumerated(EnumType.STRING)
     private StatusLocacao status;
 
-    @OneToMany(mappedBy = "locacao")
+    @OneToMany(mappedBy = "locacao", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<LocacaoItem> itens;
 }
